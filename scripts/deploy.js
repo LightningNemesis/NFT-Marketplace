@@ -4,11 +4,11 @@ async function main() {
   console.log("Deploying contracts with the account:", creator.address);
   console.log("Receiver account:", receiver.address);
 
-  const MyNFT = await ethers.getContractFactory("MyNFT");
+  const MyNFT = await ethers.getContractFactory("MyNFTMarketplace");
   const myNFT = await MyNFT.deploy();
 
   // The contract is already deployed at this point, no need for myNFT.deployed()
-  console.log("MyNFT deployed to:", await myNFT.getAddress());
+  console.log("MyNFTMarketplace deployed to:", await myNFT.getAddress());
 }
 
 main()

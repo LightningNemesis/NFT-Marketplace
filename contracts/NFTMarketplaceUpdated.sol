@@ -83,6 +83,13 @@ contract MyNFTMarketplace is ERC721, Ownable {
         return listedNFTs;
     }
 
+    function getNFTListing(
+        uint256 tokenId
+    ) public view returns (uint256 price, address seller) {
+        Listing memory listing = _listings[tokenId];
+        return (listing.price, listing.seller);
+    }
+
     function _setTokenURI(
         uint256 tokenId,
         string memory _tokenURI

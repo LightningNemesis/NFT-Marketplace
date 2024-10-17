@@ -91,6 +91,33 @@ contract MyNFTMarketplace is ERC721, Ownable {
         return _ownedTokens[owner];
     }
 
+    function getUnlistedMintedNFTs(
+        address owner
+    ) public view returns (uint256[] memory) {
+        uint256[] memory ownedTokens = _ownedTokens[owner];
+        uint256 unlistedCount = 0;
+
+        // Count unlisted tokens
+        for (uint256 i = 0; i < ownedTokens.length; i++) {
+            if (_listings[ownedTokens[i]].price == 0) {
+                // Not listed for sale
+                unlistedCount++;
+            }
+        }
+
+        // Collect unlisted tokens
+        uint256[] memory unlistedNFTs = new uint256[](unlistedCount);
+        uint256 currentIndex = 0;
+        for (uint256 i = 0; i < ownedTokens.length; i++) {
+            if (_listings[ownedTokens[i]].price == 0) {
+                unlistedNFTs[currentIndex] = ownedTokens[i];
+                currentIndex++;
+            }
+        }
+
+        return unlistedNFTs;
+    }
+
     function getListedNFTs() public view returns (uint256[] memory) {
         uint256 listedCount = 0;
         for (uint256 i = 1; i <= _tokenIds.current(); i++) {
